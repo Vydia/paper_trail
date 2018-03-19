@@ -185,8 +185,8 @@ module PaperTrail
       def object_changes_col_is_json?
         # our Rails version doesn't recognize json columns.  :type is nil, although :sql_type is 'json'
         # so until we upgrade rails, just hardcode this
+        #        [:json, :jsonb].include?(columns_hash["object_changes"].try(:type))
         true
-#        [:json, :jsonb].include?(columns_hash["object_changes"].try(:type))
       end
     end
 
