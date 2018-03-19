@@ -117,25 +117,25 @@ module PaperTrail
       def where_object(args = {})
         raise ArgumentError, "expected to receive a Hash" unless args.is_a?(Hash)
 
-        if columns_hash["object"].type == :jsonb
+#        if columns_hash["object"].type == :jsonb
           where("object @> ?", args.to_json)
-        elsif columns_hash["object"].type == :json
-          predicates = []
-          values = []
-          args.each do |field, value|
-            predicates.push "object->>? = ?"
-            values.concat([field, value.to_s])
-          end
-          sql = predicates.join(" and ")
-          where(sql, *values)
-        else
-          arel_field = arel_table[:object]
-          where_conditions = args.map { |field, value|
-            PaperTrail.serializer.where_object_condition(arel_field, field, value)
-          }
-          where_conditions = where_conditions.reduce { |a, e| a.and(e) }
-          where(where_conditions)
-        end
+        # elsif columns_hash["object"].type == :json
+        #   predicates = []
+        #   values = []
+        #   args.each do |field, value|
+        #     predicates.push "object->>? = ?"
+        #     values.concat([field, value.to_s])
+        #   end
+        #   sql = predicates.join(" and ")
+        #   where(sql, *values)
+        # else
+        #   arel_field = arel_table[:object]
+        #   where_conditions = args.map { |field, value|
+        #     PaperTrail.serializer.where_object_condition(arel_field, field, value)
+        #   }
+        #   where_conditions = where_conditions.reduce { |a, e| a.and(e) }
+        #   where(where_conditions)
+        # end
       end
 
       # Query the `versions.object_changes` column by attributes, using the
