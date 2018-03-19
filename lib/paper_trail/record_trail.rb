@@ -208,8 +208,9 @@ module PaperTrail
     # in the `object_changes` column of the version record.
     # @api private
     def record_object_changes?
-      @record.paper_trail_options[:save_changes] &&
-        @record.class.paper_trail.version_class.column_names.include?("object_changes")
+      false
+      # @record.paper_trail_options[:save_changes] &&
+      #   @record.class.paper_trail.version_class.column_names.include?("object_changes")
     end
 
     def record_update(force)
