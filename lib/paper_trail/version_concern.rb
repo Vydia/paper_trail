@@ -183,7 +183,10 @@ module PaperTrail
       # Returns whether the `object_changes` column is using the `json` type
       # supported by PostgreSQL.
       def object_changes_col_is_json?
-        [:json, :jsonb].include?(columns_hash["object_changes"].try(:type))
+        # our Rails version doesn't recognize json columns.  :type is nil, although :sql_type is 'json'
+        # so until we upgrade rails, just hardcode this
+        true
+#        [:json, :jsonb].include?(columns_hash["object_changes"].try(:type))
       end
     end
 
